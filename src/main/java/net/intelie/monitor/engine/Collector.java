@@ -6,6 +6,7 @@ import net.intelie.monitor.events.UnhandledEvent;
 import net.intelie.monitor.listeners.Listener;
 import org.apache.log4j.Logger;
 
+import javax.annotation.Resource;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -60,7 +61,7 @@ public class Collector {
         }
     }
 
-    class MonitorTask extends TimerTask {
+    private class MonitorTask extends TimerTask {
         public void run() {
             checkAll();
         }

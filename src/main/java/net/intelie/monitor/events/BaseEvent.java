@@ -1,7 +1,7 @@
 package net.intelie.monitor.events;
 
 public class BaseEvent extends Exception implements Event {
-    String detail;
+    private String detail;
 
     public BaseEvent(String message, String detail, Throwable t) {
         super(message, t);

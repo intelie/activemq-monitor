@@ -10,7 +10,7 @@ public class CompositeEvent extends BaseEvent {
         this.events = events;
     }
 
-    static String MakeMessage(List<Event> list) {
+    private static String MakeMessage(List<Event> list) {
         if (list.size() == 0) {
             return "[no events]";
         } else if (list.size() == 1) {
@@ -20,7 +20,7 @@ public class CompositeEvent extends BaseEvent {
         }
     }
 
-    static String MakeDetails(List<Event> list) {
+    private static String MakeDetails(List<Event> list) {
         if (list.size() == 0)
             return "[no events]";
 

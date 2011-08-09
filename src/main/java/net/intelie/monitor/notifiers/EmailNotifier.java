@@ -14,8 +14,8 @@ import java.util.Properties;
 public class EmailNotifier implements Notifier {
     private static Logger logger = Logger.getLogger(EmailNotifier.class);
 
-    Session session;
-    String[] recipients;
+    private Session session;
+    private String[] recipients;
 
     public EmailNotifier(String[] recipients) {
         this.recipients = recipients;
