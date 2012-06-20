@@ -1,4 +1,6 @@
 .idea/**/*
+.idea
+*.versionsBackup
 target
 *.iml
 *.iws

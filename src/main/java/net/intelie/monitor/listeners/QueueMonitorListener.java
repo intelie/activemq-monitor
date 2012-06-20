@@ -4,8 +4,6 @@ import net.intelie.monitor.events.Event;
 import net.intelie.monitor.notifiers.Notifier;
 import org.apache.log4j.Logger;
 
-import java.util.Date;
-
 public class QueueMonitorListener implements Listener {
 
     private static Logger logger = Logger.getLogger(QueueMonitorListener.class);
@@ -28,7 +26,10 @@ public class QueueMonitorListener implements Listener {
     }
 
     public void notify(Event event, long timestamp) {
-        logger.warn("Event " + event.getMessage() + " at " + timestamp);
+        if (event instanceof Throwable)
+            logger.warn("Event " + event.getMessage() + " at " + timestamp, (Throwable) event);
+        else
+            logger.warn("Event " + event.getMessage() + " at " + timestamp);
 
         if (timestamp - lastTimestamp < interval) {
             logger.info("Discarding [" + (timestamp - lastTimestamp) + "]...");
