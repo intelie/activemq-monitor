@@ -9,7 +9,7 @@ public class TestQueueCollection extends TestCase {
     public void testEmptyQueueNamesWillCauseNoUpdateToBeDone() throws CompositeEvent, QueueNotFound, ServerUnavailable {
         EngineChecker checker = mock(EngineChecker.class);
 
-        QueueCollection collection = new QueueCollection(new String[0]);
+        QueueCollection collection = new QueueCollection(null, new String[0]);
         collection.checkAll(checker);
 
         verify(checker, times(0)).getDequeueCount(anyString());
@@ -18,7 +18,7 @@ public class TestQueueCollection extends TestCase {
     public void testSingleQueueWillCauseOneOfEachMethodToBeCalled() throws CompositeEvent, QueueNotFound, ServerUnavailable {
         EngineChecker checker = mock(EngineChecker.class);
 
-        QueueCollection collection = new QueueCollection(new String[]{"abc"});
+        QueueCollection collection = new QueueCollection(null, new String[]{"abc"});
         collection.checkAll(checker);
 
         verify(checker, times(1)).getDequeueCount("abc");
@@ -27,7 +27,7 @@ public class TestQueueCollection extends TestCase {
     public void testTwoQueuesWillCauseTwoCalls() throws CompositeEvent, QueueNotFound, ServerUnavailable {
         EngineChecker checker = mock(EngineChecker.class);
 
-        QueueCollection collection = new QueueCollection(new String[]{"abc", "qwe"});
+        QueueCollection collection = new QueueCollection(null, new String[]{"abc", "qwe"});
         collection.checkAll(checker);
 
         verify(checker, times(1)).getDequeueCount("abc");
@@ -39,7 +39,7 @@ public class TestQueueCollection extends TestCase {
         when(checker.getDequeueCount("abc")).thenThrow(new QueueNotFound("abc", new Exception()));
 
         try {
-            QueueCollection collection = new QueueCollection(new String[]{"abc", "qwe"});
+            QueueCollection collection = new QueueCollection(null, new String[]{"abc", "qwe"});
             collection.checkAll(checker);
             fail("should throw exception'");
 
@@ -57,7 +57,7 @@ public class TestQueueCollection extends TestCase {
         when(checker.getDequeueCount("abc")).thenThrow(new RuntimeException("abc"));
 
         try {
-            QueueCollection collection = new QueueCollection(new String[]{"abc", "qwe"});
+            QueueCollection collection = new QueueCollection(null, new String[]{"abc", "qwe"});
             collection.checkAll(checker);
             fail("should throw exception'");
         } catch (CompositeEvent e) {
@@ -77,7 +77,7 @@ public class TestQueueCollection extends TestCase {
         when(checker.getDequeueCount("qwe")).thenThrow(new QueueNotFound("qwe", new Exception()));
 
         try {
-            QueueCollection collection = new QueueCollection(new String[]{"abc", "qwe", "zxc"});
+            QueueCollection collection = new QueueCollection(null, new String[]{"abc", "qwe", "zxc"});
             collection.checkAll(checker);
             fail("should throw exception'");
         } catch (CompositeEvent e) {
