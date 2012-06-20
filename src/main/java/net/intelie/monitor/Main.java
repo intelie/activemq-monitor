@@ -21,7 +21,7 @@ public class Main {
             ActiveMQChecker checker = configuration.createChecker();
             QueueMonitorListener listener = configuration.createListener();
             QueueCollection monitors = configuration.createQueueMonitors();
-            Collector collector = new Collector(checker, listener, monitors);
+            Collector collector = new Collector(checker, listener, monitors, configuration.statusFile());
             collector.start();
         } catch (Throwable e) {
             logger.warn(e.getMessage(), e);

@@ -64,10 +64,10 @@ public class MonitorConfiguration {
     }
 
     public QueueCollection createQueueMonitors() {
-        return new QueueCollection(makeFile(), monitoredQueues);
+        return new QueueCollection(monitoredQueues);
     }
 
-    private File makeFile() {
+    public File statusFile() {
         return statusFile != null ? new File(statusFile) : null;
     }
 

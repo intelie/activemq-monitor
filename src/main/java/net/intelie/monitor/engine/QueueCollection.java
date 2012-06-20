@@ -19,12 +19,10 @@ public class QueueCollection {
 
     private final List<QueueMonitor> monitors;
     private final String[] monitoredQueues;
-    private final File statusFile;
 
-    public QueueCollection(File statusFile, String[] monitoredQueues) {
+    public QueueCollection(String[] monitoredQueues) {
         this.monitoredQueues = monitoredQueues;
         this.monitors = new LinkedList<QueueMonitor>();
-        this.statusFile = statusFile;
 
         for (String queueName : monitoredQueues) {
             monitors.add(new QueueMonitor(queueName));
@@ -33,7 +31,7 @@ public class QueueCollection {
 
     public void checkAll(EngineChecker engineChecker) throws CompositeEvent {
         LinkedList<Event> events = new LinkedList<Event>();
-        for (QueueMonitor monitor : monitors)
+        for (QueueMonitor monitor : monitors) {
             try {
                 monitor.check(engineChecker);
             } catch (QueueNotFound e) {
@@ -43,24 +41,9 @@ public class QueueCollection {
             } catch (Throwable e) {
                 events.add(new UnhandledEvent(e));
             }
-
-        if (!events.isEmpty()) {
-            for (Event event : events)
-                append("CRITICAL - " + event.getMessage());
-
+        }
+        if (!events.isEmpty())
             throw new CompositeEvent(events);
-        } else {
-            append("OK - queues " + StringUtils.join(monitoredQueues, ", "));
-        }
-    }
-
-    private void append(String msg) {
-        if (statusFile == null) return;
-        try {
-            Files.append(msg, statusFile, Charset.defaultCharset());
-        } catch (Exception e) {
-            logger.warn("Exception trying to append status to file " + statusFile, e);
-        }
     }
 
 

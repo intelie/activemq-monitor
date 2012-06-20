@@ -30,6 +30,8 @@ public class EmailNotifier implements Notifier {
 
     @Override
     public void send(String subject, String body) {
+        if (recipients.length == 0) return;
+
         logger.warn("Notifying recipients: ");
         for (String to : recipients)
             logger.warn(to);
@@ -44,8 +46,7 @@ public class EmailNotifier implements Notifier {
                 message.setText(body);
                 Transport.send(message);
             }
-        }
-        catch (MessagingException e) {
+        } catch (MessagingException e) {
             throw new RuntimeException("Could not send email. Verify correctness of file mail.properties", e);
         }
     }

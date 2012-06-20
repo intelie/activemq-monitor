@@ -18,7 +18,7 @@ public class TestCollector extends TestCase {
         Listener listener = mock(Listener.class);
         EngineChecker engine = mock(EngineChecker.class);
 
-        Collector collector = new Collector(engine, listener, collection);
+        Collector collector = new Collector(engine, listener, collection, null);
         collector.checkAll();
 
         verify(collection).checkAll(engine);
@@ -35,7 +35,7 @@ public class TestCollector extends TestCase {
 
         doThrow(new CompositeEvent(new ArrayList<Event>())).when(collection).checkAll(engine);
 
-        Collector collector = new Collector(engine, listener, collection);
+        Collector collector = new Collector(engine, listener, collection, null);
         collector.checkAll();
 
         verify(collection).checkAll(engine);
@@ -53,7 +53,7 @@ public class TestCollector extends TestCase {
         doThrow(new RuntimeException()).when(listener).notify(any(Event.class));
         doThrow(new ServerUnavailable("test", new Exception())).when(engine).connect();
 
-        Collector collector = new Collector(engine, listener, collection);
+        Collector collector = new Collector(engine, listener, collection, null);
         collector.checkAll();
 
         verify(engine).connect();
@@ -67,7 +67,7 @@ public class TestCollector extends TestCase {
         EngineChecker engine = mock(EngineChecker.class);
         doThrow(new ServerUnavailable("asd", new Exception())).when(engine).connect();
 
-        Collector collector = new Collector(engine, listener, collection);
+        Collector collector = new Collector(engine, listener, collection, null);
         collector.checkAll();
 
         verify(engine).connect();

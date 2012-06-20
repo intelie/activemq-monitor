@@ -2,6 +2,7 @@
 .idea
 *.versionsBackup
 target
+*.log
 *.iml
 *.iws
 *.ipr
