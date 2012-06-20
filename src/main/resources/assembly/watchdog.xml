@@ -10,5 +10,9 @@
             <outputDirectory></outputDirectory>
             <fileMode>755</fileMode>
         </fileSet>
+        <fileSet>
+            <directory>target/generated-resources/appassembler/jsw/watchdog</directory>
+            <outputDirectory></outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>
