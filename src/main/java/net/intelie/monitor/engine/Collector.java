@@ -60,7 +60,7 @@ public class Collector {
             }
         } catch (Exception e) {
             logger.warn("Error notifying: " + e.getMessage());
-            logger.debug(e.getStackTrace());
+            logger.debug(e.getMessage(), e);
         }
     }
 

@@ -36,6 +36,7 @@ public class QueueMonitorListener implements Listener {
         }
         lastTimestamp = timestamp;
 
+        logger.info("Sending [" + (timestamp - lastTimestamp) + "]...");
         notifier.send("[ERRO][" + company + "] " + event.getMessage(), event.getDetail());
     }
 

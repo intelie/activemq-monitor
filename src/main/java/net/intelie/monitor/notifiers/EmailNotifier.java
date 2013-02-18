@@ -2,10 +2,7 @@ package net.intelie.monitor.notifiers;
 
 import org.apache.log4j.Logger;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
@@ -20,9 +17,16 @@ public class EmailNotifier implements Notifier {
     public EmailNotifier(String[] recipients) {
         this.recipients = recipients;
         try {
-            Properties properties = new Properties();
+            final Properties properties = new Properties();
             properties.load(this.getClass().getClassLoader().getResourceAsStream("mail.properties"));
-            session = Session.getDefaultInstance(properties, null);
+
+            session = Session.getDefaultInstance(properties, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    logger.info("Authenticating " + properties.getProperty("mail.auth.user"));
+                    return new PasswordAuthentication(properties.getProperty("mail.auth.user"), properties.getProperty("mail.auth.password"));
+                }
+            });
         } catch (IOException e) {
             throw new RuntimeException("Could not load mail properties. Is file mail.properties in classpath?", e);
         }
