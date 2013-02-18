@@ -40,8 +40,8 @@ public class TestQueueMonitorListener extends TestCase {
 
         QueueMonitorListener listener = new QueueMonitorListener("company", notifier, 15);
         listener.notify(event, 0);
-        listener.notify(event, 14*60*1000);
-        listener.notify(event, 15*60*1000);
+        listener.notify(event, 14);
+        listener.notify(event, 15);
 
         verify(notifier, times(2)).send("[ERRO][company] error", "error2");
     }
@@ -54,8 +54,8 @@ public class TestQueueMonitorListener extends TestCase {
 
         QueueMonitorListener listener = new QueueMonitorListener("company", notifier, 0);
         listener.notify(event, 0);
-        listener.notify(event, 14*60*1000);
-        listener.notify(event, 15*60*1000);
+        listener.notify(event, 14);
+        listener.notify(event, 15);
 
         verify(notifier, times(3)).send("[ERRO][company] error", "error2");
     }
